@@ -143,14 +143,29 @@
         $(run_part).hide();
         $(start).show();
       }
+      function count_down (finish) {
+        var n = 4;
+        var ret =function() {
+          if( n == 0){
+            finish();
+            return;
+          }
+          $(start).text(--n);
+          setTimeout(ret,1e3);
+        }
+        return ret;
+      }
       $(start).click(function() {
-        $(run_part).show();
-        $(start).hide();
-        quest_count = 0;
-        time_count  = 0;
-        times       = [];
-        update_average();
-        next_quest();
+        count_down(function() {
+          $(run_part).show();
+          $(start).hide();
+          quest_count = 0;
+          time_count  = 0;
+          times       = [];
+          update_average();
+          next_quest();
+          $(result).focus();
+        })();
       });
       $(result).on('keyup',function() {
         if( result.value == current_quest.res ){
