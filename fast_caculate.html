@@ -104,7 +104,7 @@
         var minmss = mins * min;
         var secs = Math.floor((ms - minmss)/sec);
         var secmss= secs * sec;
-        var mss  = ms - minmss - secmss;
+        var mss  = Math.floor(ms - minmss - secmss);
         return (mins ? mins + 'm ' : '') 
               +(secs ? secs + 's ' : '')
               + mss + 'ms';
