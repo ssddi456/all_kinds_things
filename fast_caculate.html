@@ -74,6 +74,8 @@
     </div>
     <script src="http://cdn.staticfile.org/jquery/1.9.0/jquery.min.js"></script>
     <script>
+    (function(){
+      
       function random_int() {
         return (Math.random()+'').match(/\.0*(\d)/)[1];
       }
@@ -113,7 +115,7 @@
         times = times.sort(ins);
 
         var sources = 
-        
+
         ['两位数乘法',
         'quests : ' + quest_count,
         'average : ' + format_time((time_count/quest_count) || '0'),
@@ -213,6 +215,8 @@
         }
         img.src = url; 
       }
+    
+    }())
     </script>
   </body>
 </html>
