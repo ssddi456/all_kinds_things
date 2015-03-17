@@ -58,7 +58,7 @@
       <div class="left">
         <button id="start">Start!!</button>
         <div id="run_part">
-          <div id="expression"></div>
+          <img id="expression" />
           <input type="text" id="result" />
           <br>
           <button id="end">end</button>
@@ -113,6 +113,7 @@
         times = times.sort(ins);
 
         var sources = 
+        
         ['两位数乘法',
         'quests : ' + quest_count,
         'average : ' + format_time((time_count/quest_count) || '0'),
@@ -127,7 +128,7 @@
       function next_quest() {
         current_quest = gen_quest();
         current_start_time = new Date().getTime();
-        $(expression).text( current_quest.x + ' * ' + current_quest.y );
+        expression_img( current_quest.x + ' * ' + current_quest.y );
       }
       function finish_quest() {
         var c_quest_time = new Date().getTime() - current_start_time;
@@ -178,24 +179,39 @@
         cancel_quest();
       });
       function average_img ( html ) {
-        var data = '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">' +
-                   '<foreignObject width="100%" height="100%">' +
-                   '<div xmlns="http://www.w3.org/1999/xhtml"'+
-                        ' style="font-size:20px;background-color:white;'+
-                                'height:200px;width:200px;">' +
-                     html +
-                   '</div>' +
-                   '</foreignObject>' +
-                   '</svg>';
+        html_to_img( html,average );
+      }
+      function expression_img ( exp, img ) {
+        html_to_img( 
+          '<span style="line-height: 40px;'
+                      + 'font-size: 30px;'
+                      + 'text-align: center;'
+                      + 'width:660px;'
+                      + 'display: inline-block;">'
+                      + exp
+                      + '</span>',
+          expression, 667, 50);
+      }
+      function html_to_img ( html, img, w, h ) {
+        w = w || 200;
+        h = h || 200;
+        var data = '<svg xmlns="http://www.w3.org/2000/svg" width="'+ w +'" height="'+ h +'">' +
+                 '<foreignObject width="100%" height="100%">' +
+                 '<div xmlns="http://www.w3.org/1999/xhtml"'+
+                      ' style="font-size:20px;background-color:white;'+
+                              '">' +
+                   html +
+                 '</div>' +
+                 '</foreignObject>' +
+                 '</svg>';
 
         var DOMURL = window.URL || window.webkitURL || window;
-        var img = average;
         var svg = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
         var url = DOMURL.createObjectURL(svg);
         img.onload = function () {
           DOMURL.revokeObjectURL(url);
         }
-        img.src = url;
+        img.src = url; 
       }
     </script>
   </body>
