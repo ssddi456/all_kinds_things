@@ -75,7 +75,7 @@
     <script src="http://cdn.staticfile.org/jquery/1.9.0/jquery.min.js"></script>
     <script>
     (function(){
-      
+      function noop () {}
       function random_int() {
         return (Math.random()+'').match(/\.0*(\d)/)[1];
       }
@@ -147,9 +147,14 @@
         $(start).show();
       }
       function count_down (finish) {
+        if( locked ){
+          return noop;
+        }
+        var locked = true;
         var n = 4;
         var ret =function() {
           if( n == 0){
+            locked = false;
             finish();
             return;
           }
